@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const port = process.env.PORT || 3000;
+
 
 require("./models/Artigo");
 
@@ -75,6 +77,6 @@ app.put("/artigo/editar/:id", (req, res) => {
 });
 
 
-app.listen(8080, ()=>{
+app.listen(port, ()=>{
     console.log("Servidor iniciado na porta 8080: https://api-labmaker-db7c20aa74d8.herokuapp.com");
 });
