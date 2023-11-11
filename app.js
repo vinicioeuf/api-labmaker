@@ -78,5 +78,5 @@ app.put("/artigo/editar/:id", (req, res) => {
 
 
 app.listen(port, ()=>{
-    console.log("Servidor iniciado na porta 8080: https://api-labmaker-db7c20aa74d8.herokuapp.com");
+    console.log(`Servidor iniciado no endereço: http://localhost:${port}`);
 });
