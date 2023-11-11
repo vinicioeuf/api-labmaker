@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 const port = process.env.PORT || 3000;
 
 
-require("./models/Artigo");
+require("./models/Usuarios");
 
-const Artigo = mongoose.model('artigo');
+// const Artigo = mongoose.model('artigo');
+const Usuarios = mongoose.model('usuarios');
 
 const app = express();
 
@@ -18,19 +19,19 @@ mongoose.connect('mongodb://mongo:G-aaGDdDDHF5CfF2b44d6ccFeCa365aH@roundhouse.pr
 });
 
 app.get("/", async (req, res) =>{
-    Artigo.find({}).then((artigo) =>{
-        return res.json(artigo);
+    Usuarios.find({}).then((usuario) =>{
+        return res.json(usuario);
     }).catch((err) =>{
         return res.status(400).json({
             error: true,
-            message: "Nenhum artigo encontrado"
+            message: "Nenhum usuario encontrado"
         });
     });
 });
 
-app.get("/artigo/:id", (req, res) => {
-    Artigo.findOne({ _id: req.params.id }).then((artigo) => {
-        return res.json(artigo);
+app.get("/usuarios/:id", (req, res) => {
+    Usuarios.findOne({ _id: req.params.id }).then((usuario) => {
+        return res.json(usuario);
     }).catch((erro) => {
         return res.status(400).json({
             error: true,
@@ -39,28 +40,28 @@ app.get("/artigo/:id", (req, res) => {
     });
 });
 
-app.post("/artigo", async (req, res) => {
+app.post("/usuarios", async (req, res) => {
     try {
-        const artigo = await Artigo.create(req.body);
+        const usuarios = await Usuarios.create(req.body);
         return res.status(200);
     } catch (err) {
         return res.status(400);
     }
 });
 
-app.get("/artigo/:id", (req, res) => {
-    Artigo.findOne({ _id: req.params.id }).then((artigo) => {
-        return res.json(artigo);
+app.get("/usuarios/:id", (req, res) => {
+    Usuarios.findOne({ _id: req.params.id }).then((usuario) => {
+        return res.json(usuario);
     }).catch((erro) => {
         return res.status(400).json({
             error: true,
-            message: "Nenhum artigo encontrado!"
+            message: "Nenhum usuario encontrado!"
         });
     });
 });
 
-app.put("/artigo/editar/:id", (req, res) => {
-    const artigo = Artigo.updateOne({_id: req.params.id}, req.body)
+app.put("/usuarios/editar/:id", (req, res) => {
+    const usuario = Usuarios.updateOne({_id: req.params.id}, req.body)
         .exec()
         .then(() => {
             return res.status(200).json({
@@ -75,7 +76,6 @@ app.put("/artigo/editar/:id", (req, res) => {
             });
         });
 });
-
 
 app.listen(port, ()=>{
     console.log(`Servidor iniciado no endereço: http://localhost:${port}`);
