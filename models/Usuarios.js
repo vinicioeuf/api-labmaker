@@ -3,23 +3,23 @@ const mongoose = require('mongoose');
 const Usuarios = new mongoose.Schema({
     nome:{
         type: String,
-        require: true
+        require: false
     },
     email:{
         type: String,
-        require: true
+        require: false
     },
     senha:{
         type: String,
-        require: true
+        require: false
     },
     idBiometria:{
         type: Number,
-        require: true
+        require: false
     },
     foto:{
         type: String,
-        require: true
+        require: false
     }
 },
 {
