@@ -29,17 +29,6 @@ app.get("/", async (req, res) =>{
     });
 });
 
-app.get("/usuarios/:id", (req, res) => {
-    Usuarios.findOne({ _id: req.params.id }).then((usuario) => {
-        return res.json(usuario);
-    }).catch((erro) => {
-        return res.status(400).json({
-            error: true,
-            message: "Nenhum artigo encontrado!"
-        });
-    });
-});
-
 app.post("/usuarios", async (req, res) => {
     try {
         const usuarios = await Usuarios.create(req.body);
