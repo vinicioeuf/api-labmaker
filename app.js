@@ -21,8 +21,8 @@ mongoose.connect('mongodb://mongo:G-aaGDdDDHF5CfF2b44d6ccFeCa365aH@roundhouse.pr
 });
 
 app.get("/", async (req, res) =>{
-    Usuarios.find({}).then((usuario) =>{
-        return res.json(usuario);
+    Usuarios.find({}).then((usuarios) =>{
+        return res.json({usuarios});
     }).catch((err) =>{
         return res.status(400).json({
             error: true,
@@ -31,9 +31,9 @@ app.get("/", async (req, res) =>{
     });
 });
 
-app.get("/acessos", async (req, res) =>{
-    Acessos.find({}).then((acesso) =>{
-        return res.json(acesso);
+app.get("/", async (req, res) =>{
+    Acessos.find({}).then((acessos) =>{
+        return res.json({acessos});
     }).catch((err) =>{
         return res.status(400).json({
             error: true,
