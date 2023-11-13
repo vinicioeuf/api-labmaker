@@ -29,6 +29,9 @@ app.get("/", async (req, res) =>{
             message: "Nenhum usuario encontrado"
         });
     });
+});
+
+app.get("/acessos", async (req, res) =>{
     Acessos.find({}).then((acesso) =>{
         return res.json(acesso);
     }).catch((err) =>{
@@ -39,18 +42,6 @@ app.get("/", async (req, res) =>{
     });
     
 });
-
-// app.get("/acessos", async (req, res) =>{
-//     Acessos.find({}).then((acesso) =>{
-//         return res.json(acesso);
-//     }).catch((err) =>{
-//         return res.status(400).json({
-//             error: true,
-//             message: "Nenhum acesso encontrado"
-//         });
-//     });
-    
-// });
 
 app.post("/usuarios", async (req, res) => {
     try {
