@@ -26,7 +26,7 @@ app.get("/", async (req, res) =>{
     }).catch((err) =>{
         return res.status(400).json({
             error: true,
-            message: "Nenhum usuario encontrado"
+            message: "Nenhum usuario cadastrado até o momento!"
         });
     });
 });
@@ -46,7 +46,7 @@ app.get("/listarusuario/:id", (req, res) => {
     }).catch((erro) => {
         return res.status(400).json({
             error: true,
-            message: "Nenhum usuario encontrado!"
+            message: "Nenhum usuario com o id que você inseriu foi encontrado!"
         });
     });
 });
