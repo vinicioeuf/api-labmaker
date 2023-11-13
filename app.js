@@ -18,15 +18,18 @@ mongoose.connect('mongodb://mongo:G-aaGDdDDHF5CfF2b44d6ccFeCa365aH@roundhouse.pr
     console.log("Ocorreu um erro na conexão!");
 });
 
-app.get("/", async (req, res) =>{
-    Usuarios.find({}).then((usuario) =>{
-        return res.json(usuario);
-    }).catch((err) =>{
-        return res.status(400).json({
-            error: true,
-            message: "Nenhum usuario encontrado"
+app.get("/", async (req, res) => {
+    Usuarios.find({})
+        .then((usuarios) => {
+            const usuariosJSON = { usuarios };
+            return res.json(usuariosJSON);
+        })
+        .catch((err) => {
+            return res.status(400).json({
+                error: true,
+                message: "Nenhum usuário encontrado"
+            });
         });
-    });
 });
 
 app.post("/usuarios", async (req, res) => {

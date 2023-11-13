@@ -1,29 +1,36 @@
 const mongoose = require('mongoose');
 
 const Usuarios = new mongoose.Schema({
-    nome:{
+    nome: {
         type: String,
-        require: false
+        required: false
     },
-    email:{
+    email: {
         type: String,
-        require: false
+        required: false
     },
-    senha:{
+    senha: {
         type: String,
-        require: false
+        required: false
     },
-    idBiometria:{
+    idBiometria: {
         type: Number,
-        require: false
+        required: false
     },
-    foto:{
+    foto: {
         type: String,
-        require: false
+        required: false
     }
 },
 {
     timestamps: true,
+});
+
+Usuarios.pre('save', function(next) {
+    if (!this.idBiometria) {
+        this.idBiometria = Math.floor(Math.random() * 120) + 1;
+    }
+    next();
 });
 
 mongoose.model('usuarios', Usuarios);
