@@ -21,7 +21,7 @@ mongoose.connect('mongodb://mongo:G-aaGDdDDHF5CfF2b44d6ccFeCa365aH@roundhouse.pr
 app.get("/", async (req, res) => {
     Usuarios.find({})
         .then((usuarios) => {
-            const usuariosJSON = { usuarios: usuarios.map(usuario => ({ dados: usuario })) };
+            const usuariosJSON = { usuarios: usuarios};
             return res.json(usuariosJSON);
         })
         .catch((err) => {
