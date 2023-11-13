@@ -21,26 +21,14 @@ mongoose.connect('mongodb://mongo:G-aaGDdDDHF5CfF2b44d6ccFeCa365aH@roundhouse.pr
 });
 
 app.get("/", async (req, res) =>{
-    Usuarios.find({}).then((usuarios) =>{
-        return res.json({usuarios});
+    Usuarios.find({}).then((usuarios, acessos) =>{
+        return res.json({usuarios}, {acessos});
     }).catch((err) =>{
         return res.status(400).json({
             error: true,
             message: "Nenhum usuario encontrado"
         });
     });
-});
-
-app.get("/", async (req, res) =>{
-    Acessos.find({}).then((acessos) =>{
-        return res.json({acessos});
-    }).catch((err) =>{
-        return res.status(400).json({
-            error: true,
-            message: "Nenhum acesso encontrado"
-        });
-    });
-    
 });
 
 app.post("/usuarios", async (req, res) => {
