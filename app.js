@@ -31,7 +31,7 @@ app.get("/", async (req, res) =>{
     });
 });
 
-app.post("/usuarios", async (req, res) => {
+app.post("/addusuarios", async (req, res) => {
     try {
         const usuarios = await Usuarios.create(req.body);
         return res.status(200);
@@ -40,7 +40,7 @@ app.post("/usuarios", async (req, res) => {
     }
 });
 
-app.get("/usuarios/:id", (req, res) => {
+app.get("/listarusuario/:id", (req, res) => {
     Usuarios.findOne({ _id: req.params.id }).then((usuario) => {
         return res.json(usuario);
     }).catch((erro) => {
