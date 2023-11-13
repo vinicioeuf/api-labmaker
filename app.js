@@ -4,9 +4,11 @@ const port = process.env.PORT || 3000;
 
 
 require("./models/Usuarios");
+require("./models/Acessos");
 
 // const Artigo = mongoose.model('artigo');
 const Usuarios = mongoose.model('usuarios');
+const Acessos = mongoose.model('acessos');
 
 const app = express();
 
@@ -27,6 +29,19 @@ app.get("/", async (req, res) =>{
             message: "Nenhum usuario encontrado"
         });
     });
+    
+});
+
+app.get("/acessos", async (req, res) =>{
+    Acessos.find({}).then((acesso) =>{
+        return res.json(acesso);
+    }).catch((err) =>{
+        return res.status(400).json({
+            error: true,
+            message: "Nenhum acesso encontrado"
+        });
+    });
+    
 });
 
 app.post("/usuarios", async (req, res) => {
