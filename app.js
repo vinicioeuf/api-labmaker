@@ -30,7 +30,16 @@ app.get("/", async (req, res) =>{
         });
     });
 });
-
+app.get("/acoes", async (req, res) =>{
+    Usuarios.find({}).then((acoes) =>{
+        return res.json({acoes});
+    }).catch((err) =>{
+        return res.status(400).json({
+            error: true,
+            message: "Nenhuma ação feita até o momento!"
+        });
+    });
+});
 app.post("/addusuarios", async (req, res) => {
     try {
         const usuarios = await Usuarios.create(req.body);
