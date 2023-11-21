@@ -5,10 +5,10 @@ const port = process.env.PORT || 3000;
 
 require("./models/Usuarios");
 require("./models/Acessos");
-require("./models/Acoes");
+// require("./models/Acoes");
 // const Artigo = mongoose.model('artigo');
 const Usuarios = mongoose.model('usuarios');
-const Acoes = mongoose.model('acoes');
+// const Acoes = mongoose.model('acoes');
 const Acessos = mongoose.model('acessos');
 
 const app = express();
