@@ -25,24 +25,6 @@
 //     console.log(`Servidor iniciado no endereço: http://localhost:${port}`);
 // });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const express = require('express');
 const mongoose = require('mongoose');
 const port = process.env.PORT || 3000;
