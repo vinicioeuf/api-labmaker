@@ -1,3 +1,48 @@
+// const express = require('express');
+// const { Pool } = require('pg');
+// // require("./models/Usuarios");
+// require("dotenv").config();
+
+// const port = process.env.PORT || 3000;
+// const pool = new Pool({
+//     connectionString: process.env.POSTGRES_URL
+// });
+// const app = express();
+
+
+// app.use(express.json());
+
+// app.get("/users", async (req, res) =>{
+//     try{
+//         const {rows} = await pool.query('SELECT * FROM users');
+//         return res.status(200).send(rows);
+//     }catch(err){
+//         return res.status(400).send(err);
+//     }
+// });
+
+// app.listen(port, ()=>{
+//     console.log(`Servidor iniciado no endereço: http://localhost:${port}`);
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const express = require('express');
 const mongoose = require('mongoose');
 const port = process.env.PORT || 3000;
@@ -15,7 +60,7 @@ const app = express();
 
 app.use(express.json());
 
-mongoose.connect('mongodb://mongo:G-aaGDdDDHF5CfF2b44d6ccFeCa365aH@roundhouse.proxy.rlwy.net:52462').then(() => {
+mongoose.connect('mongodb://mongo:geAabG-cec3HH21h5gECcHBc4Fgd3c3C@roundhouse.proxy.rlwy.net:32413').then(() => {
     console.log("Conexão realizada com sucesso!");
 }).catch((erro) =>{
     console.log("Ocorreu um erro na conexão!");
