@@ -1,34 +1,7 @@
-// const express = require('express');
-// const { Pool } = require('pg');
-// // require("./models/Usuarios");
-// require("dotenv").config();
-
-// const port = process.env.PORT || 3000;
-// const pool = new Pool({
-//     connectionString: process.env.POSTGRES_URL
-// });
-// const app = express();
-
-
-// app.use(express.json());
-
-// app.get("/users", async (req, res) =>{
-//     try{
-//         const {rows} = await pool.query('SELECT * FROM users');
-//         return res.status(200).send(rows);
-//     }catch(err){
-//         return res.status(400).send(err);
-//     }
-// });
-
-// app.listen(port, ()=>{
-//     console.log(`Servidor iniciado no endereço: http://localhost:${port}`);
-// });
 
 const express = require('express');
 const mongoose = require('mongoose');
 const port = process.env.PORT || 3000;
-
 
 require("./models/Usuarios");
 require("./models/Acessos");
@@ -58,22 +31,13 @@ app.get("/", async (req, res) =>{
         });
     });
 });
-// app.get("/acoes", async (req, res) =>{
-//     Usuarios.find({}).then((acoes) =>{
-//         return res.json({acoes});
-//     }).catch((err) =>{
-//         return res.status(400).json({
-//             error: true,
-//             message: "Nenhuma ação feita até o momento!"
-//         });
-//     });
-// });
+
 app.post("/addusuarios", async (req, res) => {
     try {
         const usuarios = await Usuarios.create(req.body);
-        return res.status(200);
+        return res.status(200).send("Usuário adicionado com sucesso");
     } catch (err) {
-        return res.status(400);
+        return res.status(400).send("Erro ao adicionar usuário");
     }
 });
 
