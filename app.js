@@ -15,7 +15,7 @@ const app = express();
 
 app.use(express.json());
 
-mongoose.connect('mongodb://mongo:geAabG-cec3HH21h5gECcHBc4Fgd3c3C@roundhouse.proxy.rlwy.net:32413').then(() => {
+mongoose.connect('mongodb://mongo:13dhgdEgg4fAgdb5HF4fCEbC-C5Ff6ah@viaduct.proxy.rlwy.net:16669').then(() => {
     console.log("Conexão realizada com sucesso!");
 }).catch((erro) =>{
     console.log("Ocorreu um erro na conexão!");
