@@ -1,0 +1,12 @@
+POST https://api-labmaker-db7c20aa74d8.herokuapp.com/addusuarios HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Vinicio",
+    "email": "vinicio.eufrazio@aluno.ifsertao-pe.edu.br",
+    "idBiometria": 18,
+    "foto": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fdol.com.br%2Fcarajas%2Fentretenimento%2F837436%2Fvideo-tiringa-e-preso-por-dirigir-bebado-e-causar-acidente&psig=AOvVaw1JkOIAX7D-lI18zmFaLAlB&ust=1707756124040000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCKjS8Lrdo4QDFQAAAAAdAAAAABAJ",
+    "horas": 20,
+    "entradas": 6,
+    "saidas": 6
+}

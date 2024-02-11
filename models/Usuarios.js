@@ -20,7 +20,19 @@ const Usuarios = new mongoose.Schema({
     foto: {
         type: String,
         required: false
-    }
+    },
+    horas:{
+        type: Number,
+        required: false
+    },
+    entradas:{
+        type: Number,
+        required: false
+    },
+    saidas:{
+        type: Number,
+        required: false
+    },
 },
 {
     timestamps: true,
