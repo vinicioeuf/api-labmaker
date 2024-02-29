@@ -16,7 +16,7 @@ const Acessos = new mongoose.Schema(
         require: false
     },
     entrada:{
-        type: Timestamp,
+        type: String,
         require: false
     }
 },
