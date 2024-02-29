@@ -14,10 +14,6 @@ const Acessos = new mongoose.Schema(
     email:{
         type: String,
         require: false
-    },
-    entrada:{
-        type: String,
-        require: false
     }
 },
 {
