@@ -38,11 +38,11 @@ const Usuarios = new mongoose.Schema({
     timestamps: true,
 });
 
-Usuarios.pre('save', function(next) {
-    if (!this.idBiometria) {
-        this.idBiometria = Math.floor(Math.random() * 120) + 1;
-    }
-    next();
-});
+// Usuarios.pre('save', function(next) {
+//     if (!this.idBiometria) {
+//         this.idBiometria = Math.floor(Math.random() * 120) + 1;
+//     }
+//     next();
+// });
 
 mongoose.model('usuarios', Usuarios);
