@@ -1,14 +1,23 @@
+const { Timestamp } = require('mongodb');
 const mongoose = require('mongoose');
 
 const Acessos = new mongoose.Schema(
     {
-    titulo:{
-        type: String,
-        require: true
+    idBiometria:{
+        type: Number,
+        require: false
     },
-    conteudo:{
+    nome:{
         type: String,
-        require: true
+        require: false
+    },
+    email:{
+        type: String,
+        require: false
+    },
+    entrada:{
+        type: Timestamp,
+        require: false
     }
 },
 {

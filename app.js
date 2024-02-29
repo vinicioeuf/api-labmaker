@@ -27,7 +27,18 @@ app.get("/", async (req, res) =>{
     }).catch((err) =>{
         return res.status(400).json({
             error: true,
-            message: "Nenhum usuario cadastrado até o momento!"
+            message: "Ocorreu um erro na API, estamos resolvendo!"
+        });
+    });
+});
+
+app.get("/acessos", async (req, res) =>{
+    Acessos.find({}).then((acessos) =>{
+        return res.json({acessos});
+    }).catch((err) =>{
+        return res.status(400).json({
+            error: true,
+            message: "Nenhum acesso até o momento!"
         });
     });
 });
