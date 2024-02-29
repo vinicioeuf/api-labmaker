@@ -52,6 +52,16 @@ app.post("/addusuarios", async (req, res) => {
     }
 });
 
+app.post("/addacessos", async (req, res) => {
+    try {
+        const acessos = await Acessos.create(req.body);
+        return res.status(200).send("Acesso adicionado com sucesso");
+    } catch (err) {
+        return res.status(400).send("Erro ao adicionar acesso", res);
+    }
+});
+
+
 app.get("/listarusuario/:id", (req, res) => {
     Usuarios.findOne({ _id: req.params.id }).then((usuario) => {
         return res.json(usuario);
