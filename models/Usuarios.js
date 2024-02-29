@@ -1,15 +1,16 @@
+const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
 
 const Usuarios = new mongoose.Schema({
+    _id:{
+        type: ObjectId,
+        required: true
+    },
     nome: {
         type: String,
         required: false
     },
     email: {
-        type: String,
-        required: false
-    },
-    senha: {
         type: String,
         required: false
     },
@@ -21,18 +22,7 @@ const Usuarios = new mongoose.Schema({
         type: String,
         required: false
     },
-    horas:{
-        type: Number,
-        required: false
-    },
-    entradas:{
-        type: Number,
-        required: false
-    },
-    saidas:{
-        type: Number,
-        required: false
-    },
+
 },
 {
     timestamps: true,
