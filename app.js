@@ -2,7 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const port = process.env.PORT || 3000;
-
+process.env.TZ = 'America/Sao_Paulo';
 require("./models/Usuarios");
 require("./models/Acessos");
 // require("./models/Acoes");
