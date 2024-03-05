@@ -1,5 +1,5 @@
 
-process.env.TZ = 'America/Recife';
+process.env.TZ = 'America/Sao_Paulo';
 const express = require('express');
 const mongoose = require('mongoose');
 const port = process.env.PORT || 3000;
