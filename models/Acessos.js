@@ -18,6 +18,10 @@ const Acessos = new mongoose.Schema(
     foto:{
         type: String,
         require: false
+    },
+    tipo:{
+        type: String,
+        require: false
     }
 },
 {
