@@ -37,14 +37,6 @@ const Usuarios = new mongoose.Schema({
     qntSaidas:{
         type: Number,
         required: false
-    },
-    qntAcessosIncompletos:{
-        type: Number,
-        required: false
-    },
-    horarioUltimaEntrada:{
-        type: Double,
-        required: false
     }
 },
 {
