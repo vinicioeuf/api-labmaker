@@ -1,4 +1,4 @@
-const { ObjectId } = require('mongodb');
+const { ObjectId, Double } = require('mongodb');
 const mongoose = require('mongoose');
 
 const Usuarios = new mongoose.Schema({
@@ -25,8 +25,19 @@ const Usuarios = new mongoose.Schema({
     status:{
         type: String,
         required: false
+    },
+    qntHoras:{
+        type: Double,
+        required: false
+    },
+    qntEntradas:{
+        type: Number,
+        required: false
+    },
+    qntSaidas:{
+        type: Number,
+        required: false
     }
-
 },
 {
     timestamps: true,
