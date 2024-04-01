@@ -1,110 +1,95 @@
+
 process.env.TZ = 'America/Sao_Paulo';
 const express = require('express');
-const { MongoClient } = require('mongodb');
+const mongoose = require('mongoose');
 const port = process.env.PORT || 3000;
+require("./models/Usuarios");
+require("./models/Acessos");
+// require("./models/Acoes");
+// const Artigo = mongoose.model('artigo');
+const Usuarios = mongoose.model('usuarios');
+// const Acoes = mongoose.model('acoes');
+const Acessos = mongoose.model('acessos');
 
 const app = express();
+
 app.use(express.json());
 
-const uri = "mongodb+srv://vinimvdz:manuelneuer2003@api.ibyeq3e.mongodb.net/";
-
-const client = new MongoClient(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+mongoose.connect('mongodb+srv://vinimvdz:manuelneuer2003@api.ibyeq3e.mongodb.net/').then(() => {
+    console.log("Conexão realizada com sucesso!");
+}).catch((erro) =>{
+    console.log("Ocorreu um erro na conexão!");
 });
 
-async function run() {
-  try {
-    await client.connect();
-    console.log("Conexão realizada com sucesso!");
-
-    const database = client.db("sua_database");
-    const usuariosCollection = database.collection("usuarios");
-    const acessosCollection = database.collection("acessos");
-
-    app.get("/", async (req, res) => {
-      try {
-        const usuarios = await usuariosCollection.find({}).toArray();
-        return res.json({ usuarios });
-      } catch (err) {
+app.get("/", async (req, res) =>{
+    Usuarios.find({}).then((usuarios) =>{
+        return res.json({usuarios});
+    }).catch((err) =>{
         return res.status(400).json({
-          error: true,
-          message: "Ocorreu um erro na API, estamos resolvendo!"
-        });
-      }
-    });
-
-    app.get("/acessos", async (req, res) => {
-      try {
-        const acessos = await acessosCollection.find({}).toArray();
-        return res.json({ acessos });
-      } catch (err) {
-        return res.status(400).json({
-          error: true,
-          message: "Nenhum acesso até o momento!"
-        });
-      }
-    });
-
-    app.post("/addusuarios", async (req, res) => {
-      try {
-        await usuariosCollection.insertOne(req.body);
-        return res.status(200).send("Usuário adicionado com sucesso");
-      } catch (err) {
-        return res.status(400).send("Erro ao adicionar usuário");
-      }
-    });
-
-    app.post("/addacessos", async (req, res) => {
-      try {
-        await acessosCollection.insertOne(req.body);
-        return res.status(200).send("Acesso adicionado com sucesso");
-      } catch (err) {
-        return res.status(400).send("Erro ao adicionar acesso");
-      }
-    });
-
-    app.get("/listarusuario/:id", async (req, res) => {
-      try {
-        const usuario = await usuariosCollection.findOne({ _id: req.params.id });
-        if (usuario) {
-          return res.json(usuario);
-        } else {
-          return res.status(400).json({
             error: true,
-            message: "Nenhum usuário com o ID fornecido foi encontrado!"
-          });
-        }
-      } catch (err) {
+            message: "Ocorreu um erro na API, estamos resolvendo!"
+        });
+    });
+});
+
+app.get("/acessos", async (req, res) =>{
+    Acessos.find({}).then((acessos) =>{
+        return res.json({acessos});
+    }).catch((err) =>{
         return res.status(400).json({
-          error: true,
-          message: "Ocorreu um erro na API, estamos resolvendo!"
+            error: true,
+            message: "Nenhum acesso até o momento!"
         });
-      }
     });
+});
 
-    app.put("/usuarios/editar/:id", async (req, res) => {
-      try {
-        await usuariosCollection.updateOne({ _id: req.params.id }, { $set: req.body });
-        return res.status(200).json({
-          error: false,
-          message: "Alterações feitas"
-        });
-      } catch (err) {
+app.post("/addusuarios", async (req, res) => {
+    try {
+        const usuarios = await Usuarios.create(req.body);
+        return res.status(200).send("Usuário adicionado com sucesso");
+    } catch (err) {
+        return res.status(400).send("Erro ao adicionar usuário");
+    }
+});
+
+app.post("/addacessos", async (req, res) => {
+    try {
+        const acessos = await Acessos.create(req.body);
+        return res.status(200).send("Acesso adicionado com sucesso");
+    } catch (err) {
+        return res.status(400).send("Erro ao adicionar acesso", res);
+    }
+});
+
+
+app.get("/listarusuario/:id", (req, res) => {
+    Usuarios.findOne({ _id: req.params.id }).then((usuario) => {
+        return res.json(usuario);
+    }).catch((erro) => {
         return res.status(400).json({
-          error: true,
-          message: "Ocorreu um problema, tente novamente"
+            error: true,
+            message: "Nenhum usuario com o id que você inseriu foi encontrado!"
         });
-      }
     });
+});
 
-    app.listen(port, () => {
-      console.log(`Servidor iniciado no endereço: http://localhost:${port}`);
-    });
-  } finally {
-    // Ensure that the client will close when you finish/error
-    // await client.close();
-  }
-}
+app.put("/usuarios/editar/:id", (req, res) => {
+    const usuario = Usuarios.updateOne({_id: req.params.id}, req.body)
+        .exec()
+        .then(() => {
+            return res.status(200).json({
+                erro: false,
+                message: "Alterações feitas"
+            });
+        })
+        .catch((erro) => {
+            return res.status(400).json({
+                erro: true,
+                message: "Ocorreu um problema, tente novamente"
+            });
+        });
+});
 
-run().catch(console.dir);
+app.listen(port, ()=>{
+    console.log(`Servidor iniciado no endereço: http://localhost:${port}`);
+});
