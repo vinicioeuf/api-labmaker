@@ -15,7 +15,7 @@ const app = express();
 
 app.use(express.json());
 
-mongoose.connect('mongodb+srv://vinimvdz:manuelneuer2003@api.ibyeq3e.mongodb.net/?retryWrites=true&w=majority&appName=api').then(() => {
+mongoose.connect('mongodb+srv://vinimvdz:manuelneuer2003@api.ibyeq3e.mongodb.net/').then(() => {
     console.log("Conexão realizada com sucesso!");
 }).catch((erro) =>{
     console.log("Ocorreu um erro na conexão!");
