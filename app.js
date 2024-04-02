@@ -1,94 +1,64 @@
-
-process.env.TZ = 'America/Sao_Paulo';
 const express = require('express');
-const mongoose = require('mongoose');
+const { Pool } = require('pg');
 const port = process.env.PORT || 3000;
-require("./models/Usuarios");
-require("./models/Acessos");
-// require("./models/Acoes");
-// const Artigo = mongoose.model('artigo');
-const Usuarios = mongoose.model('usuarios');
-// const Acoes = mongoose.model('acoes');
-const Acessos = mongoose.model('acessos');
+
+const pool = new Pool({
+  user: 'ubpmenjx8ymz9cfvehqy',
+  host: 'bfru4gozjthvt8y6hszo-postgresql.services.clever-cloud.com',
+  database: 'bfru4gozjthvt8y6hszo',
+  password: 'wMu6vQ1AR1kT9bC7ApLfH10N6lSifj',
+  port: 50013,
+});
 
 const app = express();
 
 app.use(express.json());
 
-mongoose.connect('mongodb://mongo:FQAqtTeeMaSSyLKjbMNOYrwnzozTzMuF@viaduct.proxy.rlwy.net:26232').then(() => {
-    console.log("Conexão realizada com sucesso!");
-}).catch((erro) =>{
-    console.log("Ocorreu um erro na conexão!");
-});
-
 app.get("/", async (req, res) =>{
-    Usuarios.find({}).then((usuarios) =>{
-        return res.json({usuarios});
-    }).catch((err) =>{
-        return res.status(400).json({
+    try {
+        const usuarios = await pool.query('SELECT * FROM usuarios');
+        res.json(usuarios.rows);
+    } catch (err) {
+        console.error('Erro ao buscar usuários', err);
+        res.status(400).json({
             error: true,
             message: "Ocorreu um erro na API, estamos resolvendo!"
         });
-    });
-});
-
-app.get("/acessos", async (req, res) =>{
-    Acessos.find({}).then((acessos) =>{
-        return res.json({acessos});
-    }).catch((err) =>{
-        return res.status(400).json({
-            error: true,
-            message: "Nenhum acesso até o momento!"
-        });
-    });
+    }
 });
 
 app.post("/addusuarios", async (req, res) => {
+    const { nome, email } = req.body;
     try {
-        const usuarios = await Usuarios.create(req.body);
-        return res.status(200).send("Usuário adicionado com sucesso");
+        await pool.query('INSERT INTO usuarios (nome, email) VALUES ($1, $2)', [nome, email]);
+        res.status(200).send("Usuário adicionado com sucesso");
     } catch (err) {
-        return res.status(400).send("Erro ao adicionar usuário");
+        console.error('Erro ao adicionar usuário', err);
+        res.status(400).send("Erro ao adicionar usuário");
     }
 });
 
-app.post("/addacessos", async (req, res) => {
+app.get("/listarusuario/:id", async (req, res) => {
+    const { id } = req.params;
     try {
-        const acessos = await Acessos.create(req.body);
-        return res.status(200).send("Acesso adicionado com sucesso");
+        const usuario = await pool.query('SELECT * FROM usuarios WHERE id = $1', [id]);
+        if (usuario.rows.length === 0) {
+            return res.status(404).json({
+                error: true,
+                message: "Nenhum usuário encontrado com o ID fornecido!"
+            });
+        }
+        res.json(usuario.rows[0]);
     } catch (err) {
-        return res.status(400).send("Erro ao adicionar acesso", res);
-    }
-});
-
-
-app.get("/listarusuario/:id", (req, res) => {
-    Usuarios.findOne({ _id: req.params.id }).then((usuario) => {
-        return res.json(usuario);
-    }).catch((erro) => {
-        return res.status(400).json({
+        console.error('Erro ao buscar usuário', err);
+        res.status(400).json({
             error: true,
-            message: "Nenhum usuario com o id que você inseriu foi encontrado!"
+            message: "Ocorreu um erro na API, estamos resolvendo!"
         });
-    });
+    }
 });
 
-app.put("/usuarios/editar/:id", (req, res) => {
-    const usuario = Usuarios.updateOne({_id: req.params.id}, req.body)
-        .exec()
-        .then(() => {
-            return res.status(200).json({
-                erro: false,
-                message: "Alterações feitas"
-            });
-        })
-        .catch((erro) => {
-            return res.status(400).json({
-                erro: true,
-                message: "Ocorreu um problema, tente novamente"
-            });
-        });
-});
+// Adapte os demais endpoints de acordo com as mudanças necessárias para PostgreSQL
 
 app.listen(port, ()=>{
     console.log(`Servidor iniciado no endereço: http://localhost:${port}`);
