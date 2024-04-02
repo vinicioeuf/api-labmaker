@@ -3,11 +3,11 @@ const { Pool } = require('pg');
 const port = process.env.PORT || 3000;
 
 const pool = new Pool({
-  user: 'ubpmenjx8ymz9cfvehqy',
-  host: 'bfru4gozjthvt8y6hszo-postgresql.services.clever-cloud.com',
-  database: 'bfru4gozjthvt8y6hszo',
-  password: 'wMu6vQ1AR1kT9bC7ApLfH10N6lSifj',
-  port: 50013,
+  user: 'fmnercvqudmolw',
+  host: 'ec2-3-230-24-12.compute-1.amazonaws.com',
+  database: 'db9h5hhh04rd6v',
+  password: 'df7629e201f340921d1139325ce8d37c1b293915d3659275bff6ca1ea89d2d58',
+  port: 5432,
 });
 
 const app = express();
