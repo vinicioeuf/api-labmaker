@@ -1,31 +1,15 @@
-const { Timestamp } = require('mongodb');
-const mongoose = require('mongoose');
+// models/Acessos.js
+const pool = require('../e');
 
-const Acessos = new mongoose.Schema(
-    {
-    idBiometria:{
-        type: Number,
-        require: false
-    },
-    nome:{
-        type: String,
-        require: false
-    },
-    email:{
-        type: String,
-        require: false
-    },
-    foto:{
-        type: String,
-        require: false
-    },
-    tipo:{
-        type: String,
-        require: false
-    }
-},
-{
-    timestamps: true,
-});
+const getAcessos = async () => {
+    const res = await pool.query('SELECT * FROM acessos');
+    return res.rows;
+};
 
-mongoose.model('acessos', Acessos);
+const createAcesso = async (data) => {
+    const { usuario_id, data_acesso } = data;
+    const res = await pool.query('INSERT INTO acessos (usuario_id, data_acesso) VALUES ($1, $2) RETURNING *', [usuario_id, data_acesso]);
+    return res.rows[0];
+};
+
+module.exports = { getAcessos, createAcesso };
