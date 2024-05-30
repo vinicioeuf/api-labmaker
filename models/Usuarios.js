@@ -16,7 +16,7 @@ const getUsuarioById = async (id) => {
 const createUsuario = async (data) => {
     console.log("Criando usuário com dados:", data);
     const { nome, email } = data;
-    const res = await pool.query('INSERT INTO usuarios (nome, email, idBiometria, foto, status) VALUES ($1, $2, $3, $4, $5) RETURNING *', [nome, email]);
+    const res = await pool.query('INSERT INTO usuarios (nome, email) VALUES ($1, $2) RETURNING *', [nome, email]);
     return res.rows[0];
 };
 
