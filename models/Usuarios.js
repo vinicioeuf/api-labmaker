@@ -1,4 +1,3 @@
-// models/Usuarios.js
 const pool = require('../e');
 
 const getUsuarios = async () => {
@@ -15,8 +14,11 @@ const getUsuarioById = async (id) => {
 
 const createUsuario = async (data) => {
     console.log("Criando usuário com dados:", data);
-    const { nome, email, idBiometria, foto, status} = data;
-    const res = await pool.query('INSERT INTO usuarios (nome, email, idBiometria, foto, status) VALUES ($1, $2, $3, $4, $5) RETURNING *', [nome, email, idBiometria, foto, status]);
+    const { nome, email, idBiometria, foto, status } = data;
+    const res = await pool.query(
+        'INSERT INTO usuarios (nome, email, idBiometria, foto, status, createdAt) VALUES ($1, $2, $3, $4, $5, NOW()) RETURNING *',
+        [nome, email, idBiometria, foto, status]
+    );
     return res.rows[0];
 };
 
