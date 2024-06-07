@@ -40,8 +40,8 @@ app.post("/addusuarios", async (req, res) => {
         const usuario = await createUsuario(req.body);
         return res.status(200).send("Usuário adicionado com sucesso");
     } catch (err) {
-        console.error(err);
-        return res.status(400).send("Erro ao adicionar usuário");
+        console.error("Erro ao adicionar usuário:", err);
+        return res.status(400).json({ error: "Erro ao adicionar usuário", details: err.message });
     }
 });
 
