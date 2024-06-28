@@ -1,19 +1,23 @@
-const express = require('express');
 const { Pool } = require('pg');
 
-require("dotenv").config()
-const app = express();
-
 const pool = new Pool({
-    connectionString: process.env.POSTGRES_URL
+    user: 'up2u0djded4xc8w34voj',
+    host: 'bi01ymgejijc7uj6olrn-postgresql.services.clever-cloud.com',
+    database: 'bi01ymgejijc7uj6olrn',
+    password: 'Q8930qriIRCpL7D6fYb6lXeIaboEYk',
+    port: 50013,
+    ssl: {
+        rejectUnauthorized: false
+    }
 });
 
-const port = process.env.PORT || 3000;
-
-app.use(express.json());
-
-
-
-app.listen(port, ()=>{
-    console.log(`Servidor iniciado no endereço: http://localhost:${port}`);
+// Teste de conexão
+pool.connect((err, client, release) => {
+    if (err) {
+        return console.error('Erro adquirindo cliente do pool', err.stack);
+    }
+    console.log('Conexão bem-sucedida com o banco de dados');
+    release();
 });
+
+module.exports = pool;
