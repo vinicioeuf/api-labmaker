@@ -1,32 +1,42 @@
-const pool = require('../e');
+const { ObjectId } = require('mongodb');
+const mongoose = require('mongoose');
 
-const getUsuarios = async () => {
-    console.log("Buscando todos os usuários");
-    const res = await pool.query('SELECT * FROM usuarios');
-    return res.rows;
-};
+const Usuarios = new mongoose.Schema({
+    // _id:{
+    //     type: ObjectId,
+    //     required: true
+    // },
+    nome: {
+        type: String,
+        required: false
+    },
+    email: {
+        type: String,
+        required: false
+    },
+    idBiometria: {
+        type: Number,
+        required: false
+    },
+    foto: {
+        type: String,
+        required: false
+    },
+    status:{
+        type: String,
+        required: false
+    }
 
-const getUsuarioById = async (id) => {
-    console.log(`Buscando usuário com id: ${id}`);
-    const res = await pool.query('SELECT * FROM usuarios WHERE id = $1', [id]);
-    return res.rows[0];
-};
+},
+{
+    timestamps: true,
+});
 
-const createUsuario = async (data) => {
-    console.log("Criando usuário com dados:", data);
-    const { nome, email, idBiometria, foto, status } = data;
-    const res = await pool.query(
-        'INSERT INTO usuarios (nome, email, "idBiometria", foto, status, "createdAt") VALUES ($1, $2, $3, $4, $5, NOW()) RETURNING *',
-        [nome, email, idBiometria, foto, status]
-    );
-    return res.rows[0];
-};
+// Usuarios.pre('save', function(next) {
+//     if (!this.idBiometria) {
+//         this.idBiometria = Math.floor(Math.random() * 120) + 1;
+//     }
+//     next();
+// });
 
-const updateUsuario = async (id, data) => {
-    console.log(`Atualizando usuário com id: ${id} com dados:`, data);
-    const { nome, email } = data;
-    const res = await pool.query('UPDATE usuarios SET nome = $1, email = $2 WHERE id = $3 RETURNING *', [nome, email, id]);
-    return res.rows[0];
-};
-
-module.exports = { getUsuarios, getUsuarioById, createUsuario, updateUsuario };
+mongoose.model('usuarios', Usuarios);
