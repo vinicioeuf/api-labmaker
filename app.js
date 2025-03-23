@@ -21,7 +21,18 @@ app.get("/", async (req, res) => {
         });
     }
 });
-
+app.get("/usuarios", async (req, res) => {
+    try {
+        const usuarios = await getUsuarios();
+        return res.json({ usuarios });
+    } catch (err) {
+        console.error(err);
+        return res.status(400).json({
+            error: true,
+            message: "Ocorreu um erro na API, estamos resolvendo!"
+        });
+    }
+});
 app.get("/acessos", async (req, res) => {
     try {
         const acessos = await getAcessos();
