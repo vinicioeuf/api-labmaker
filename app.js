@@ -61,10 +61,14 @@ app.post("/addacessos", async (req, res) => {
         const acesso = await createAcesso(req.body);
         return res.status(200).send("Acesso adicionado com sucesso");
     } catch (err) {
-        console.error(err);
-        return res.status(400).send("Erro ao adicionar acesso");
+        console.error("Erro ao adicionar acesso:", err); // Log detalhado do erro
+        return res.status(400).json({
+            error: "Erro ao adicionar acesso",  // Mensagem genérica
+            details: err.message  // Detalhes específicos do erro
+        });
     }
 });
+
 
 app.get("/listarusuario/:id", async (req, res) => {
     try {
